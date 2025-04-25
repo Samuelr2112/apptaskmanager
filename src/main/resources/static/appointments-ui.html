@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Manager</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: left; }
+        th { background: #f4f4f4; }
+        input { margin: 4px; padding: 6px; }
+    </style>
+</head>
+<body>
+<h1>Appointments</h1>
+
+<table id="appointmentTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="appointmentsBody">
+    <!-- Appointments go here -->
+    </tbody>
+</table>
+
+<h2>Add Appointment</h2>
+
+<div>
+    <label for="id"><strong>Name</strong></label><br>
+    <input id="id" placeholder="e.g. Samuel" maxlength="10"><br><br>
+
+    <label for="date"><strong>Date and Time</strong></label><br>
+    <input id="date" type="datetime-local"><br><br>
+
+    <label for="desc"><strong>Reason for Appointment</strong></label><br>
+    <input id="desc" placeholder="e.g. Project" maxlength="50"><br><br>
+
+    <button onclick="addAppointment()">Add</button>
+</div>
+
+<script>
+    const api = "http://localhost:8080/appointments";
+
+    function loadAppointments() {
+      fetch(api)
+        .then(res => res.json())
+        .then(data => {
+          const body = document.getElementById("appointmentsBody");
+          body.innerHTML = ""; // clear previous rows
+          data.forEach(app => {
+            const row = document.createElement("tr");
+
+            const date = new Date(app.appointmentDate);
+            const options = {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "numeric",
+              minute: "2-digit",
+              hour12: true
+            };
+            const formattedDate = date.toLocaleString("en-US", options).replace(",", " at");
+
+            row.innerHTML = `
+              <td>${app.appointmentID}</td>
+              <td>${app.description}</td>
+              <td>${formattedDate}</td>
+              <td><button onclick="deleteAppointment('${app.appointmentID}')">Delete</button></td>
+            `;
+            body.appendChild(row);
+          });
+        });
+    }
+
+    function addAppointment() {
+      const id = document.getElementById("id").value;
+      const rawDate = document.getElementById("date").value;
+      const desc = document.getElementById("desc").value;
+
+      if (!id || !rawDate || !desc) {
+        alert("All fields are required");
+        return;
+      }
+
+      const date = rawDate + ":00.000+00:00";
+
+      fetch(api, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ appointmentID: id, appointmentDate: date, description: desc })
+      })
+      .then(res => {
+        if (!res.ok) {
+          return res.text().then(text => { throw new Error(text) });
+        }
+        return res.json();
+      })
+      .then(() => {
+        document.getElementById("id").value = "";
+        document.getElementById("date").value = "";
+        document.getElementById("desc").value = "";
+        loadAppointments();
+      })
+      .catch(err => {
+        alert("Error: " + err.message);
+      });
+    }
+
+    function deleteAppointment(id) {
+      fetch(`${api}/${id}`, { method: "DELETE" })
+        .then(() => loadAppointments());
+    }
+
+    loadAppointments();
+</script>
+</body>
+</html>
