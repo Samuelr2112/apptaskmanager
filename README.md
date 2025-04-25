@@ -1,65 +1,78 @@
 # Task, Contact, and Appointment Management System
 
-A full-stack Java project for managing tasks, contacts, and appointments. Built using Spring Boot (REST API) and vanilla HTML/CSS/JS for the front-end. The system supports adding, deleting, and listing entries in memory, with validation and error handling.
+This is a full-stack Java project I built using Spring Boot for the backend and plain HTML/CSS/JavaScript for the frontend. It’s a simple, clean app to manage appointments, contacts, and tasks — all running in memory without a database.
 
-## 🔧 Features
+The project includes a working REST API (tested with Postman and curl), a user-friendly UI to add and delete appointments, and full JUnit test coverage for all core services.
 
-- ✅ Add, delete, and view **Appointments**, **Tasks**, and **Contacts**
-- 🧠 In-memory service layer with full data validation
-- 🧪 100% test coverage with JUnit
-- 🌐 HTML/CSS/JS front-end to interact with the REST API
-- 🛠 Modular structure using OOP principles and Spring Boot
+---
 
-## 🚀 Technologies
+## 🔍 What It Does
+
+- ✅ Add, delete, and list **appointments**, **contacts**, and **tasks**
+- 📬 REST API (GET, POST, DELETE) — testable via browser, Postman, or curl
+- 🧠 In-memory service layer with input validation and error handling
+- 💻 Frontend made with plain HTML/CSS/JS using Fetch API
+- 🧪 Unit tested with JUnit 5 for all services and models
+
+---
+
+## 🧰 Tech Stack
 
 - Java 17+
-- Spring Boot 3+
-- REST API (GET, POST, DELETE)
-- HTML5 + JavaScript (Fetch API)
+- Spring Boot 3 (REST API)
+- HTML5 + CSS + JS (Fetch API)
 - JUnit 5
-- H2 (in-memory DB for Spring Boot runtime)
+- H2 (in-memory DB for runtime only)
+
+---
 
 ## 📁 Project Structure
 
-src ├── main │ ├── java/com/samuel/appointments/apptaskmanager/ │ │ ├── controllers/ │ │ ├── services/ │ │ ├── models/ │ │ └── ApptaskmanagerApplication.java │ └── resources/static/index.html └── test └── java/com/samuel/appointments/apptaskmanager/ └── (JUnit test files)
+src ├── main │ ├── java/com/samuel/appointments/apptaskmanager/ │ │ ├── controllers/ │ │ ├── services/ │ │ ├── models/ │ │ └── ApptaskmanagerApplication.java │ └── resources/static/appointments-ui.html └── test └── java/com/samuel/appointments/apptaskmanager/ └── (JUnit tests)
 
-markdown
+yaml
 Copy
 Edit
 
-## 💻 Usage
+---
 
-1. **Run the Spring Boot App**  
-   Inside IntelliJ or from terminal:
-   ```bash
-   ./mvnw spring-boot:run
-Open the front-end
-Navigate to:
+## 🚀 How to Run
+
+### 1. Start the API
+
+From IntelliJ or terminal:
+
+bash
+/mvnw spring-boot:run
+2. Open the Web Interface
+Visit:
 
 bash
 Copy
 Edit
 http://localhost:8080/appointments-ui.html
-Use the Web Interface
-App Task Manager
+You can add or delete appointments from the browser.
 
-Fill in form fields for appointments
-
-Click "Add" to send data via REST API
-
-Click "Delete" to remove them
-
-✅ Example JSON (POST Body)
+3. Test via Postman or curl
+Sample POST:
 json
 Copy
 Edit
+POST /appointments
+Content-Type: application/json
+
 {
   "appointmentID": "a01",
   "appointmentDate": "2025-04-30T10:00:00.000+00:00",
   "description": "Meeting with client"
 }
-🧪 Tests
-Run all unit tests:
+Sample DELETE:
+bash
+Copy
+Edit
+DELETE /appointments/a01
+✅ Running Tests
+Run unit tests for all features:
 
 bash
 Copy
@@ -69,8 +82,13 @@ Tests cover:
 
 AppointmentService
 
-TaskService
-
 ContactService
 
-All model validation logic
+TaskService
+
+Model validation
+
+👋 Why I Built This
+This project helped me practice building a full-stack app from scratch — setting up a backend with Spring Boot, connecting it to a simple HTML interface, and testing everything with JUnit. I also wanted to create something that I could run quickly without any setup (no database required). You can try it all from the browser or Postman.
+
+Feel free to explore and test it!
