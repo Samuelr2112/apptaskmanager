@@ -39,7 +39,7 @@ Navigate to:
 bash
 Copy
 Edit
-http://localhost:8080/index.html
+http://localhost:8080/appointments-ui.html
 Use the Web Interface
 App Task Manager
 
