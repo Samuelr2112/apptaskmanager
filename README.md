@@ -27,11 +27,18 @@ The project includes a working REST API (tested with Postman and curl), a user-f
 
 ## 📁 Project Structure
 ```
-src/ ├── main/ │ ├── java/com/samuel/appointments/apptaskmanager/ │ │ ├── controllers/ │ │ ├── services/ │ │ ├── models/ │ │ └── ApptaskmanagerApplication.java │ └── resources/static/appointments-ui.html └── test/ └── java/com/samuel/appointments/apptaskmanager/ └── (JUnit tests)
+src/
+├── main/
+│   ├── java/com/samuel/appointments/apptaskmanager/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── models/
+│   │   └── ApptaskmanagerApplication.java
+│   └── resources/static/appointments-ui.html
+└── test/
+    └── java/com/samuel/appointments/apptaskmanager/
+        └── (JUnit tests)
 ```
-yaml
-Copy
-Edit
 
 ---
 
